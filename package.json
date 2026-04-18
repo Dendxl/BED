@@ -1,0 +1,7 @@
+{
+  "name": "hospital-bed-finder",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes serve . -l 8765"
+  }
+}

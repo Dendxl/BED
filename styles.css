@@ -1,0 +1,478 @@
+:root {
+  --blue: #1e6fd9;
+  --blue-dark: #1558b0;
+  --bg: #e8ecf1;
+  --card: #fff;
+  --text: #1a1d24;
+  --muted: #5c6473;
+  --success: #1b9e3e;
+  --shadow: 0 4px 14px rgba(22, 45, 90, 0.12);
+  --radius: 12px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+}
+
+.hero {
+  position: relative;
+  background: linear-gradient(160deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: #fff;
+  padding: 1.25rem 1rem 1.5rem;
+  text-align: center;
+}
+
+.hero h1 {
+  margin: 0.5rem 2rem 0.35rem;
+  font-size: clamp(1.35rem, 4vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0 2rem 0.85rem;
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff3b3b;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+/* One-site navigation */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto 0.25rem;
+  max-width: 640px;
+}
+
+.nav-tab {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-tab:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.nav-tab.is-active {
+  background: #fff;
+  color: var(--blue);
+  border-color: #fff;
+}
+
+.site-panel.is-hidden,
+.is-hidden {
+  display: none !important;
+}
+
+main {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+}
+
+.map-section h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.65rem;
+  color: var(--text);
+}
+
+#map {
+  height: 280px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #cfe2f7;
+  z-index: 1;
+}
+
+.map-hint {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0.75rem 0 0;
+}
+
+.hospital-list {
+  list-style: none;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hospital-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hospital-card:hover {
+  box-shadow: 0 6px 20px rgba(22, 45, 90, 0.16);
+}
+
+.hospital-card:focus {
+  outline: none;
+}
+
+.hospital-card:focus-visible {
+  border-color: var(--blue);
+}
+
+.hospital-card.is-active {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 1px var(--blue), var(--shadow);
+}
+
+.hospital-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.hospital-card .address {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.beds-row {
+  margin-top: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--success);
+}
+
+.beds-row .check {
+  flex-shrink: 0;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 10px;
+}
+
+.leaflet-popup-content {
+  margin: 0.65rem 0.85rem;
+  line-height: 1.4;
+}
+
+.popup-title {
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.popup-meta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Staff + shared forms */
+.staff-inner,
+.patient-inner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.card-form {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.card-form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+}
+
+.card-form input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #c5cdd8;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-form button {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.card-form button.secondary {
+  background: #5c6473;
+  margin-top: 0.5rem;
+}
+
+.card-form button.danger {
+  background: #9d0208;
+  margin-top: 0.35rem;
+}
+
+.card-form button.small {
+  width: auto;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.85rem;
+}
+
+.err {
+  color: #c1121f;
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 1rem;
+  line-height: 1.4;
+}
+
+.doc-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #e8ecf1;
+  font-size: 0.9rem;
+}
+
+.doc-row:last-child {
+  border-bottom: none;
+}
+
+.doc-meta {
+  flex: 1;
+  min-width: 200px;
+}
+
+.doc-name {
+  font-weight: 700;
+}
+
+.doc-spec {
+  color: var(--muted);
+}
+
+h3.section-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+/* Patient sub-tabs + chat */
+.patient-subnav {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.patient-subnav button {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #c5cdd8;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.patient-subnav button.is-active {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+.pt-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.pt-card-inner {
+  padding: 1.25rem;
+}
+
+.pt-card input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #c5cdd8;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.pt-card button.primary {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pt-banner {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  background: #fff3cd;
+  color: #664d03;
+  border-bottom: 1px solid #e6d89c;
+}
+
+.pt-banner.ai-on {
+  background: #d1e7dd;
+  color: #0f5132;
+  border-color: #badbcc;
+}
+
+#pt-messages {
+  height: min(380px, 50vh);
+  overflow-y: auto;
+  padding: 1rem;
+  background: #f4f6f9;
+}
+
+.bubble {
+  max-width: 85%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  margin-bottom: 0.65rem;
+  line-height: 1.45;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+
+.bubble.user {
+  margin-left: auto;
+  background: var(--blue);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.bubble.bot {
+  margin-right: auto;
+  background: #fff;
+  border: 1px solid #e0e4ea;
+  border-bottom-left-radius: 4px;
+}
+
+.pt-composer {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid #e0e4ea;
+  background: #fff;
+}
+
+.pt-composer textarea {
+  flex: 1;
+  min-height: 44px;
+  max-height: 120px;
+  resize: vertical;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #c5cdd8;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.pt-composer button {
+  align-self: flex-end;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pt-logout-row {
+  text-align: right;
+  padding: 0 0 0.5rem;
+}
+
+.pt-logout-row button {
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+@media (min-width: 640px) {
+  #map {
+    height: 340px;
+  }
+}

@@ -1,0 +1,85 @@
+HOW TO OPEN THE APP
+-------------------
+
+Everything is on ONE page: open http://localhost:8765/ (index.html).
+Use the three tabs at the top: Map & hospitals | Hospital staff | Patients.
+
+Easiest: double-click start-all.bat (starts the API + the website together).
+
+Or:
+
+1. Double-click start.bat (website only — staff login still needs the API).
+
+2. Or in PowerShell / Command Prompt, run BOTH lines:
+
+   cd c:\Users\db_um\SIAPROJECT
+   python -m http.server 8765
+
+3. In the browser use EXACTLY the port the black window shows:
+   - If it says "port 8765"  ->  http://localhost:8765/
+   - If it says "port 8000"  ->  http://localhost:8000/
+
+4. The server must be started from the SIAPROJECT folder (where index.html is).
+   If you start it from C:\Users\db_um only, the map files won't be at the site root.
+
+HOSPITAL STAFF (per-facility access)
+------------------------------------
+
+Each hospital has its own login. After sign-in, staff can ONLY change their own
+bed count; the public map reads those numbers from the API.
+
+1. Double-click run-backend.bat (keep the window open). API: http://127.0.0.1:8088
+2. Double-click start.bat and open http://localhost:8765/
+3. Click the "Hospital staff" tab (or bookmark index.html#staff).
+   Old URLs hospital/dashboard.html and patient/*.html redirect to the same site.
+
+Demo logins (change before real use): username AND password = hospital id:
+  spcmc, cgh, spdh, st-gerard, ppl-sp, spcgh, ich, sfpg
+
+Production: set strong passwords in the database, use HTTPS, and set the
+environment variable HBF_SECRET_KEY to a long random string.
+
+AI CHAT (optional)
+------------------
+
+Patient chat uses OpenAI when you set on the PC that runs the API:
+
+  set OPENAI_API_KEY=sk-...your-key...
+  set OPENAI_MODEL=gpt-4o-mini
+
+Then restart run-backend.bat / start-all.bat. Without a key, the app still
+replies with a short demo message (not full ChatGPT).
+
+TROUBLESHOOTING
+----------------
+
+"Connection refused" on http://localhost:8765
+  The website server is not running. Double-click start-all.bat or start.bat
+  and KEEP the black window open. If you close it, the browser will refuse
+  the connection. Wait a few seconds after starting, then refresh (F5).
+
+"Not Found" when signing in (hospital or patient)
+  The page at :8765 is only the website. Logins call the API on port 8088.
+
+  IMPORTANT: Port 8000 vs 8088
+  If you see API docs at http://localhost:8000/docs with ONLY login, hospitals,
+  and beds — that is an OLD copy of the API (no doctors, no patients). The
+  website is wired to port 8088. Close extra "uvicorn" or Python windows, then
+  run start-all.bat. Check http://localhost:8088/docs — you should see routes
+  like GET /api/me/doctors, POST /api/auth/patient/register, POST /api/patient/chat.
+
+  If 8088/docs does not open or those routes are missing, port 8088 is wrong
+  or the API from THIS folder is not running. Stop XAMPP/other apps on 8088
+  if needed, then start the "HBF API 8088" window again.
+
+Patient account
+  Hospital staff use hospital/dashboard.html. Patients use:
+    http://localhost:8765/patient/register.html
+  (There is no "sign up" on the staff login screen — that is intentional.)
+
+Cursor: "Unable to resolve resource c:%5CUsers%5C..."
+  Do not open the project from a broken or URL-encoded link. In Cursor use:
+  File -> Open Folder -> choose this folder in Explorer:
+    C:\Users\db_um\SIAPROJECT
+  (Your Windows profile name may use different capitalization; pick the real
+  folder from the list.)

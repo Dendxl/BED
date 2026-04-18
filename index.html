@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hospital Bed Finder — San Pablo City</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="site-nav" aria-label="Main sections">
+      <button type="button" class="nav-tab is-active" data-view="map">Map &amp; hospitals</button>
+      <button type="button" class="nav-tab" data-view="staff">Hospital staff</button>
+      <button type="button" class="nav-tab" data-view="patient">Patients &amp; assistant</button>
+    </nav>
+    <h1>Hospital Bed Finder</h1>
+    <p class="tagline">Find hospitals, beds, doctors, and answers — San Pablo City</p>
+    <div class="live-badge" role="status">
+      <span class="live-dot" aria-hidden="true"></span>
+      One site — map, staff tools, patient chat
+    </div>
+  </header>
+
+  <main>
+    <div id="panel-map" class="site-panel">
+      <section class="map-section" aria-labelledby="map-heading">
+        <h2 id="map-heading">Nearby Hospitals in San Pablo City</h2>
+        <div id="map" role="application" aria-label="Map of hospitals in San Pablo City"></div>
+        <p class="map-hint">Tap a hospital in the list or a pin on the map to view details.</p>
+      </section>
+      <section class="list-section" aria-label="Hospital list">
+        <ul class="hospital-list" id="hospital-list"></ul>
+      </section>
+    </div>
+
+    <div id="panel-staff" class="site-panel is-hidden">
+      <div class="staff-inner">
+        <div id="staff-login-section" class="card-form">
+          <h2 style="margin-top:0">Hospital staff login</h2>
+          <p class="hint" style="margin-top:0">Facility accounts: update beds and doctors shown on the map.</p>
+          <p class="hint" style="margin-top:0.5rem; padding:0.6rem 0.75rem; background:#e8f0fe; border-radius:8px; border:1px solid #b8d4ff;">
+            Run <code>start-all.bat</code> and keep both windows open. API: port <strong>8088</strong>.
+          </p>
+          <div id="staff-login-error" class="err" hidden></div>
+          <label for="staff-username">Username</label>
+          <input id="staff-username" autocomplete="username" />
+          <label for="staff-password">Password</label>
+          <input id="staff-password" type="password" autocomplete="current-password" />
+          <button type="button" id="staff-btn-login">Sign in</button>
+          <p class="hint"><strong>Demo:</strong> username and password = hospital id (e.g. <code>spcgh</code>).</p>
+        </div>
+
+        <div id="staff-dash-section" hidden>
+          <div class="card-form">
+            <h2 style="margin-top:0" id="staff-hospital-title">Your hospital</h2>
+            <p id="staff-hospital-address" class="hint" style="margin-top:0"></p>
+            <div id="staff-dash-error" class="err" hidden></div>
+            <label for="staff-beds">Available beds</label>
+            <input id="staff-beds" type="number" min="0" max="50000" />
+            <button type="button" id="staff-btn-save">Save beds</button>
+            <button type="button" class="secondary" id="staff-btn-logout">Sign out</button>
+          </div>
+          <div class="card-form">
+            <h3 class="section-title">Doctors on duty (public map)</h3>
+            <p class="hint" style="margin-top:0">Name and specialty (e.g. Neurosurgery).</p>
+            <div id="staff-doc-error" class="err" hidden></div>
+            <div id="staff-doctor-list"></div>
+            <label for="staff-doc-name">Doctor name</label>
+            <input id="staff-doc-name" placeholder="e.g. Dr. Ana Reyes" />
+            <label for="staff-doc-specialty">Specialty</label>
+            <input id="staff-doc-specialty" placeholder="e.g. Neurosurgeon" />
+            <button type="button" id="staff-btn-add-doc">Add doctor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-patient" class="site-panel is-hidden">
+      <div class="patient-inner">
+        <div id="pt-wrap-auth">
+          <div class="patient-subnav">
+            <button type="button" id="pt-tab-signin" class="is-active">Sign in</button>
+            <button type="button" id="pt-tab-register">Create account</button>
+          </div>
+          <div id="pt-signin-card" class="pt-card">
+            <div class="pt-card-inner">
+              <h2 style="margin-top:0">Patient sign in</h2>
+              <div id="pt-login-err" class="err" hidden></div>
+              <input id="pt-lu" placeholder="Username" autocomplete="username" />
+              <input id="pt-lp" type="password" placeholder="Password" autocomplete="current-password" />
+              <button type="button" class="primary" id="pt-btn-login">Sign in</button>
+              <p class="hint" style="margin-bottom:0">AI replies when <code>OPENAI_API_KEY</code> is set on the server; otherwise demo text.</p>
+            </div>
+          </div>
+          <div id="pt-reg-card" class="pt-card is-hidden">
+            <div class="pt-card-inner">
+              <h2 style="margin-top:0">Create patient account</h2>
+              <div id="pt-reg-err" class="err" hidden></div>
+              <input id="pt-reg-user" placeholder="Username (min 3 characters)" autocomplete="username" minlength="3" />
+              <input id="pt-reg-pass" type="password" placeholder="Password (min 6 characters)" autocomplete="new-password" minlength="6" />
+              <button type="button" class="primary" id="pt-btn-register">Create account</button>
+              <p class="hint" style="margin-bottom:0">Not a medical record. Not medical advice.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-logout-row">
+          <button type="button" id="pt-logout" hidden>Sign out</button>
+        </div>
+
+        <div id="pt-wrap-chat" class="is-hidden">
+          <div class="pt-card" style="margin-top:0">
+            <div id="pt-ai-banner" class="pt-banner">Checking assistant…</div>
+            <div id="pt-messages" aria-live="polite"></div>
+            <div class="pt-composer">
+              <textarea id="pt-msg" placeholder="Ask about hospitals or general (non-emergency) questions…" rows="2"></textarea>
+              <button type="button" id="pt-send">Send</button>
+            </div>
+            <p class="hint" style="padding:0 1rem 1rem; margin:0">Emergencies: call emergency services immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="site.js"></script>
+</body>
+</html>
