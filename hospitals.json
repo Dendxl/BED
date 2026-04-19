@@ -1,0 +1,66 @@
+[
+  {
+    "id": "spcmc",
+    "name": "San Pablo Colleges Medical Center",
+    "address": "Brgy. San Rafael, Maharlika Hwy., San Pablo City, Laguna",
+    "lat": 14.0711,
+    "lng": 121.3068,
+    "beds_available": 42
+  },
+  {
+    "id": "cgh",
+    "name": "Community General Hospital of San Pablo City, Inc.",
+    "address": "Cipriano B. Colago Ave., San Pablo City, Laguna",
+    "lat": 14.07338,
+    "lng": 121.31312,
+    "beds_available": 28
+  },
+  {
+    "id": "spdh",
+    "name": "San Pablo Doctors Hospital",
+    "address": "55 A. Mabini St., San Pablo City, Laguna",
+    "lat": 14.073316,
+    "lng": 121.324295,
+    "beds_available": 35
+  },
+  {
+    "id": "st-gerard",
+    "name": "St. Gerard Hospital",
+    "address": "32 P. Zamora St., San Pablo City, Laguna",
+    "lat": 14.069861,
+    "lng": 121.324471,
+    "beds_available": 22
+  },
+  {
+    "id": "ppl-sp",
+    "name": "Panlalawigang Pagamutan ng Laguna–San Pablo",
+    "address": "Gen. Antonio Luna Rd. cor. P. Gomez St., Brgy. IV-B, San Pablo City",
+    "lat": 14.07245,
+    "lng": 121.32895,
+    "beds_available": 55
+  },
+  {
+    "id": "spcgh",
+    "name": "San Pablo City General Hospital",
+    "address": "Gen. Antonio Luna Rd., San Pablo City, Laguna",
+    "lat": 14.07305,
+    "lng": 121.32845,
+    "beds_available": 48
+  },
+  {
+    "id": "ich",
+    "name": "Immaculate Conception Hospital, Inc.",
+    "address": "P. Alcantara St., San Pablo City, Laguna",
+    "lat": 14.069146,
+    "lng": 121.32235,
+    "beds_available": 31
+  },
+  {
+    "id": "sfpg",
+    "name": "Saints Francis and Paul General Hospital",
+    "address": "Justice Abad Santos St., Farconville, Brgy. San Francisco, San Pablo City",
+    "lat": 14.0762,
+    "lng": 121.3184,
+    "beds_available": 18
+  }
+]
